@@ -11,22 +11,17 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
+    - name: Set up JDK
+      uses: actions/setup-java@v1
       with:
-        dotnet-version: 2.2
+        java-version: 1.8
+        server-id: github
+        settings-path: ${{ github.workspace }}
     
-    - name: Install dependencies
-      run: cd Engines && dotnet restore
-      
     - name: Build
-      run: cd Engines && dotnet build --configuration Release --no-restore
+      run: cd Engines && mvn -B package --file pom.xml
       
     - name: Publish
-      run: cd Engines && dotnet publish
-
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: FactSet.AnalyticsAPI.Engines
-        path: Engines/src/FactSet.AnalyticsAPI.Engines/bin/Debug/netstandard2.0/publish/
+      run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
+      env:
+        GITHUB_TOKEN: ${{ github.token }}

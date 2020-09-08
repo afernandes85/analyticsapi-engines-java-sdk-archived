@@ -21,7 +21,7 @@ Use this library to integrate with FactSet's Analytics APIs. Below APIs are supp
 
 ## Requirements
 
-* Java 7 or Java 8
+* Java 1.7 or Java 1.8
 * Maven to build and install the SDK
 
 ## Installation

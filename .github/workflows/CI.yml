@@ -17,20 +17,20 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
+    - name: Set up JDK
+      uses: actions/setup-java@v1
       with:
-        dotnet-version: 2.2
+        java-version: 1.8
     
     - name: Build new SDK
-      run: cd Engines && dotnet build --configuration Release
+      run: cd Engines && mvn -B package --file pom.xml
         
     - name: Build Tests
-      run: cd Tests && dotnet build --configuration Release
+      run: cd java-sd-tests && mvn -B package --file pom.xml
 
     - name: Run Tests
       run: echo "Tests ran successfully" 
-      # run: cd Tests && dotnet test --no-restore --verbosity normal
+      # run: cd java-sd-tests && mvn -q test -Dtest=ApiTestsRunner
 
     - name: Build Examples
-      run: cd Examples && dotnet build --configuration Release
+      run: cd examples && mvn -B package --file pom.xml
