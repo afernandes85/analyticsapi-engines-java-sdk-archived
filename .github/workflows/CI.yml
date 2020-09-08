@@ -23,14 +23,14 @@ jobs:
         java-version: 1.8
     
     - name: Build new SDK
-      run: cd Engines && mvn -B package --file pom.xml
+      run: cd Engines && mvn clean package
         
     - name: Build Tests
-      run: cd java-sdk-tests && mvn -B package --file pom.xml
+      run: cd java-sdk-tests && mvn clean package
 
     - name: Run Tests
       run: echo "Tests ran successfully" 
       # run: cd java-sd-tests && mvn -q test -Dtest=ApiTestsRunner
 
     - name: Build Examples
-      run: cd examples && mvn -B package --file pom.xml
+      run: cd examples && mvn clean package
