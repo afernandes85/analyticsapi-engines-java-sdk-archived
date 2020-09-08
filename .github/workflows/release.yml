@@ -1,0 +1,32 @@
+name: Release
+
+on:
+  release:
+    types: [ published ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 2.2
+    
+    - name: Install dependencies
+      run: cd Engines && dotnet restore
+      
+    - name: Build
+      run: cd Engines && dotnet build --configuration Release --no-restore
+      
+    - name: Publish
+      run: cd Engines && dotnet publish
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: FactSet.AnalyticsAPI.Engines
+        path: Engines/src/FactSet.AnalyticsAPI.Engines/bin/Debug/netstandard2.0/publish/
