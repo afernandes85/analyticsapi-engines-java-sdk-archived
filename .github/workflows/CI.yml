@@ -26,7 +26,7 @@ jobs:
       run: cd Engines && mvn -B package --file pom.xml
         
     - name: Build Tests
-      run: cd java-sd-tests && mvn -B package --file pom.xml
+      run: cd java-sdk-tests && mvn -B package --file pom.xml
 
     - name: Run Tests
       run: echo "Tests ran successfully" 
