@@ -1,5 +1,11 @@
 name: Release
 
+env:
+  MAVEN_GPG_PRIVATE_KEY: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
+  MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
+  MAVEN_CENTRAL_TOKEN: ${{ secrets.MAVEN_CENTRAL_TOKEN }}
+  MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
+
 on:
   release:
     types: [ published ]
@@ -15,13 +21,14 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
-        server-id: github
-        settings-path: ${{ github.workspace }}
+        server-id: maven
+        server-username: MAVEN_USERNAME
+        server-password: MAVEN_CENTRAL_TOKEN
+        gpg-private-key: ${{ env.MAVEN_GPG_PRIVATE_KEY }}
+        gpg-passphrase: MAVEN_GPG_PASSPHRASE
     
     - name: Build
-      run: cd Engines && mvn -B package --file pom.xml
+      run: mvn -B package --file Engines/pom.xml
       
-    - name: Publish
-      run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
-      env:
-        GITHUB_TOKEN: ${{ github.token }}
+    - name: Publish to Apache Maven Central
+      run: cd Engines && mvn deploy
