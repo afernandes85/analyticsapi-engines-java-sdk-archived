@@ -28,7 +28,7 @@ jobs:
         gpg-passphrase: MAVEN_GPG_PASSPHRASE
     
     - name: Build
-      run: mvn -B package --file Engines/pom.xml
+      run: mvn -B package --file auto-generated-sdk/pom.xml
       
     - name: Publish to Apache Maven Central
-      run: cd Engines && mvn deploy
+      run: cd auto-generated-sdk && mvn deploy
