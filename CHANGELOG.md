@@ -8,6 +8,7 @@ Summary:
 
 Breaking changes:
 * Additional parameter in calculation object constructor
+* Remove points property from CalculationStatus and CalculationStatusSummary
 
 Functionality Additions:
 * Publisher API calculation and document lookup
